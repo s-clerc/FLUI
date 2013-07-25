@@ -1,0 +1,51 @@
+body {
+  font-family: Roboto, sans-serif;
+  margin: 0;
+}
+/*button classes */
+.button {
+  underline: none;
+}
+.buttonDiv {
+  border-radius: 100px;
+  min-width: 44px;
+  min-height: 44px;
+}
+  
+.toolbar {
+  min-height: 1.2em;
+  font-size: 2em;
+  border-bottom: 1px solid silver
+}
+
+a {
+  min-height: 40px;
+  min-width: 40px;
+  text-decoration: none;
+  color: blue;
+  font-size: 19px;
+}
+a: visited {
+  color: blue;
+}
+a: hover {
+  text-color: blue;
+}
+
+.default-blue {
+  background-color: red;
+  color: blue;
+}
+.positive-green {
+  background-color: lime;
+  color: white;
+}
+.negative-red{
+  background-color: blue;
+  color: white;
+}
+.sharp-corners: {
+  border-radius: 0px;
+}
+  
+  
