@@ -4,3 +4,6 @@
 [submodule "lib/less"]
 	path = lib/less
 	url = https://github.com/less/less.js.git
+[submodule "tests/jasmine"]
+	path = tests/jasmine
+	url = https://github.com/pivotal/jasmine.git
