@@ -1,33 +1,27 @@
-//Adds :hover support for ios Devices
-/** 
-  * @author sam 
-*/
-document.addEventListener("touchstart", function() {},false);
-xtag.register("fl-toolbar", {
-  lifecycle: {
-    created: function() {
-      this.xtag.shadow = (this.createShadowRoot || this.webkitCreateShadowRoot).bind(this)();
-      this.xtag.shadow.applyAuthorStyles = true;
-      this.xtag.shadowDiv = document.createElement("div");
-      this.xtag.shadow.appendChild(this.xtag.shadowDiv);
-      this.xtag.shadowDiv.className += "toolbar ";
-      this.xtag.shadowDiv.innerHTML = this.innerHTML;
-    },
-    attributeChanged: function() {
-      console.log("ATTRIBUTE CHANGED, ACT NORMAL ACT NORMAL");
+(function() {
+  "use strict";
+  window.fl = {};
+  window.fl.findFileSource = function() {
+    var scripts = document.getElementsByTagName('script'),
+      script = scripts[scripts.length - 1];
+    if (script.getAttribute.length !== undefined) {
+      return script.getAttribute('src')
     }
-    
-  },
-  accessors: {
-    "innerHTML": {
-      set: function() {
-        console.log("F");
+    return script.getAttribute('src', 2)
+  };
+  window.fl.depends = function(r, filename, async) {
+    var e,
+        source = fl.findFileSource().replace(filename, ""); 
+    r.forEach(function(src) {
+      e = document.createElement("script");
+      if (async !== "undefined") {
+        e.setAttribute("async", (async || false));
       }
-    },
-    "e": {
-      set: function() {
-        console.log("F");
-      }
-    }
+      e.setAttribute("src", source + src);
+      document.head.appendChild(e);
+    });
   }
-});
+  fl.depends([
+    "js/package.js"
+  ], "flui.js", true);
+}())

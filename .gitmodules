@@ -1,0 +1,6 @@
+[submodule "lib/xtag"]
+	path = lib/xtag
+	url = https://github.com/x-tag/core.git
+[submodule "lib/less"]
+	path = lib/less
+	url = https://github.com/less/less.js.git
