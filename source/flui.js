@@ -9,9 +9,9 @@
     }
     return script.getAttribute('src', 2)
   };
-  window.fl.depends = function(r, filename, async) {
+  window.fl.depends = function(r, filename, async, filesource) {
     var e,
-        source = fl.findFileSource().replace(filename, ""); 
+        source = (filesource || fl.findFileSource()).replace(filename, ""); 
     r.forEach(function(src) {
       e = document.createElement("script");
       if (async !== "undefined") {
