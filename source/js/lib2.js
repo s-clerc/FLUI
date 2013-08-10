@@ -9,7 +9,7 @@
     this.mixins = [];
   }
   var fireOnTap = function (e) {
-    xtag.fireEvent(this, "tap", e);
+    xtag.fireEvent(this, "tap", {eventData: e});
     r = true;
     if (this.ontap) {
       if (this.ontap(e) === false) {
