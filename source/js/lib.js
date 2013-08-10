@@ -123,20 +123,20 @@
       }.bind(this));
     };
   };
-  //* Mixin which adds functionnality for the 
+  //* Mixin which adds functionality for the 
   //* disabled attribute(disabling ontap and 
   //* onclick(using some tricks...))
   xtag.mixins.disabled = new fl.xtagObject();
   xtag.mixins.disabled.accessors.disabled = {
     attribute: {boolean: true},
     set: function (value) {
-      if (true) {
-        fl.removeOnTap(this);
+      if (value) {
+        fl.removeOnTap(this);  
         this.xtag.onclickOldValue = this.onclick;
         this.onclick = function(e) {
           e.stopPropagation();
         }
-      } else if (false) {
+      } else if (!value) {
         fl.addOnTap(this);
           //Reverts it to the old value.
           this.onclick = this.xtag.onclickOldValue;
