@@ -130,15 +130,22 @@
   xtag.mixins.disabled.accessors.disabled = {
     attribute: {boolean: true},
     set: function (value) {
+      console.log(value);
       if (value) {
-        fl.removeOnTap(this);  
+        //Sets the cursor to the default value to make sure it doesn't look 
+        //tappable
+        this.xtag.cursorOldValue = this.style.cursor;
+        this.style.cursor = "default";
+        fl.removeOnTap(this);
+        //Saves the old value
         this.xtag.onclickOldValue = this.onclick;
         this.onclick = function(e) {
           e.stopPropagation();
         }
       } else if (!value) {
         fl.addOnTap(this);
-          //Reverts it to the old value.
+          //Reverts it to the old values.
+          this.style.cursor = this.xtag.cursorOldValue;
           this.onclick = this.xtag.onclickOldValue;
       }
     }
