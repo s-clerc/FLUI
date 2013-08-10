@@ -123,82 +123,24 @@
       }.bind(this));
     };
   };
-//* http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/
-  var addFlowListener = function (element, type, fn){
-      var flow = type == 'over';
-      element.addEventListener('OverflowEvent' in window ? 'overflowchanged' : type + 'flow', function(e){
-          if (e.type == (type + 'flow') ||
-          ((e.orient == 0 && e.horizontalOverflow == flow) ||
-          (e.orient == 1 && e.verticalOverflow == flow) ||
-          (e.orient == 2 && e.horizontalOverflow == flow && e.verticalOverflow == flow))) {
-              e.flow = type;
-              return fn.call(this, e);
-          }
-      }, false);
-  };
-  window.fl.addResizeListener = function (element, fn){
-      var resize = 'onresize' in element;
-      if (!resize && !element._resizeSensor) {
-          var sensor = element._resizeSensor = document.createElement('div');
-              sensor.className = 'resize-sensor';
-              sensor.innerHTML = '<div class="resize-overflow"><div></div></div><div class="resize-underflow"><div></div></div>';
-                                  
-          var x = 0, y = 0,
-              first = sensor.firstElementChild.firstChild,
-              last = sensor.lastElementChild.firstChild,
-              matchFlow = function(event){
-                  var change = false,
-                  width = element.offsetWidth;
-                  if (x != width) {
-                      first.style.width = width - 1 + 'px';       
-                      last.style.width = width + 1 + 'px';
-                      change = true;
-                      x = width;
-                  }
-                  var height = element.offsetHeight;
-                  if (y != height) {
-                      first.style.height = height - 1 + 'px';
-                      last.style.height = height + 1 + 'px';      
-                      change = true;
-                      y = height;
-                  }
-                  if (change && event.currentTarget != element) xtag.fireEvent(element, 'resize');
-              };
-                          
-          if (getComputedStyle(element).position == 'static'){
-              element.style.position = 'relative';
-              element._resizeSensor._resetPosition = true;
-          }
-          addFlowListener(sensor, 'over', matchFlow);
-          addFlowListener(sensor, 'under', matchFlow);
-          addFlowListener(sensor.firstElementChild, 'over', matchFlow);
-          addFlowListener(sensor.lastElementChild, 'under', matchFlow);   
-          element.appendChild(sensor);
-          matchFlow({});
+  //* Mixin which adds functionnality for the 
+  //* disabled attribute(disabling ontap and 
+  //* onclick(using some tricks...))
+  xtag.mixins.disabled = new fl.xtagObject();
+  xtag.mixins.disabled.accessors.disabled = {
+    attribute: {boolean: true},
+    set: function (value) {
+      if (true) {
+        fl.removeOnTap(this);
+        this.xtag.onclickOldValue = this.onclick;
+        this.onclick = function(e) {
+          e.stopPropagation();
+        }
+      } else if (false) {
+        fl.addOnTap(this);
+          //Reverts it to the old value.
+          this.onclick = this.xtag.onclickOldValue;
       }
-          var events = element._flowEvents || (element._flowEvents = []);
-          if (events.indexOf(fn) == -1) events.push(fn);
-          if (!resize) element.addEventListener('resize', fn, false);
-          element.onresize = function(e){
-              events.forEach(function(fn){
-                  fn.call(element, e);
-              });
-          };
-  };
-          
-  var removeResizeListener = function(element, fn){
-      var index = element._flowEvents.indexOf(fn);
-      if (index > -1) element._flowEvents.splice(index, 1);
-      if (!element._flowEvents.length) {
-          var sensor = element._resizeSensor;
-          if (sensor) {
-              element.removeChild(sensor);
-              if (sensor._resetPosition) element.style.position = 'static';
-              delete element._resizeSensor;
-          }
-          if ('onresize' in element) element.onresize = null;
-          delete element._flowEvents;
-      }
-      element.removeEventListener('resize', fn);
-  };
+    }
+  }
 }());
