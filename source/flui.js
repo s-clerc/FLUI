@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  window.fl = {};
+  window.fl = ({} ¦¦ window.fl);
   window.fl.findFileSource = function() {
     var scripts = document.getElementsByTagName('script'),
       script = scripts[scripts.length - 1];
