@@ -1,18 +1,21 @@
 (function() {
   "use strict";
-  window.fl = ({} ¦¦ window.fl);
+  window.fl = ({} || window.fl);
   window.fl.findFileSource = function() {
     var scripts = document.getElementsByTagName('script'),
       script = scripts[scripts.length - 1];
+    console.log(script);
+    console.dir(scripts);
     if (script.getAttribute.length !== undefined) {
       return script.getAttribute('src')
     }
     return script.getAttribute('src', 2)
   };
   window.fl.depends = function(r, filename, async, filesource) {
+    window.t = (filesource ? filesource : fl.findFileSource());
     var e,
-        source = (filesource ? filesource : fl.findFileSource()).replace(filename, ""); 
-    r.forEach(function(src) {
+        source = (filesource ? filesource : fl.findFileSource()).replace(filename, "");
+      r.forEach(function(src) {
       e = document.createElement("script");
       if (async !== "undefined") {
         e.setAttribute("async", (async || false));
