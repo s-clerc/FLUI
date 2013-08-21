@@ -12,16 +12,15 @@
     return script.getAttribute('src', 2)
   };
   window.fl.depends = function(r, filename, async, filesource) {
-    window.t = (filesource ? filesource : fl.findFileSource());
     var e,
-        source = (filesource ? filesource : fl.findFileSource()).replace(filename, "");
+        source = (filesource  || document.querySelector("script[src*='" + filename + "']").getAttribute("src")).replace(filename, "");
       r.forEach(function(src) {
-      e = document.createElement("script");
-      if (async !== "undefined") {
-        e.setAttribute("async", (async || false));
-      }
-      e.setAttribute("src", source + src);
-      document.head.appendChild(e);
+        e = document.createElement("script");
+        if (async !== "undefined") {
+          e.setAttribute("async", (async || false));
+        }
+        e.setAttribute("src", source + src);
+        document.head.appendChild(e);
     });
   }
   fl.depends([
