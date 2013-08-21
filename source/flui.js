@@ -11,7 +11,7 @@
   };
   window.fl.depends = function(r, filename, async, filesource) {
     var e,
-        source = (filesource || fl.findFileSource()).replace(filename, ""); 
+        source = (filesource ? filesource : fl.findFileSource()).replace(filename, ""); 
     r.forEach(function(src) {
       e = document.createElement("script");
       if (async !== "undefined") {
