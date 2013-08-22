@@ -149,5 +149,5 @@
           this.onclick = this.xtag.onclickOldValue;
       }
     }
-  }
+  };
 }());
