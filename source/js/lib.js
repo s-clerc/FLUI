@@ -80,7 +80,7 @@
     
     this.observer = new MutationObserver(this.observeFunction)
     //*Starts emulation.
-    this.emulate = function () {
+    this.start = function () {
       if (this.emulating) {
         throw new Error("Already emulating, can't emulate twice");
       }
