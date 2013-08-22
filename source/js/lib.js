@@ -7,13 +7,14 @@
   "use strict";
   //Makes sure :active classes work on ios devices.
   document.addEventListener("touchstart", function () {}, false);
-    /**Emulates the forEach function.
-     *Expects an array(must have .length) and a callback(remember to bind it).
-     *Callback recives 3 arguments:
-     *1. Data from index, 2. Actual Index, 3. Array
-     *return false from the callback to stop looping.
-     * Returns false when the loop is stopped mid-way otherwise returns true.
-     */
+  /**Emulates the forEach function.
+   *Expects an array(must have .length) and a callback(remember to bind it).
+   *Callback recives 3 arguments:
+   *1. Data from index, 2. Actual Index, 3. Array
+   *return false from the callback to stop looping.
+   * Returns false when the loop is stopped mid-way otherwise returns true.
+   *Note: Does not work with dynamic arrays.
+  */
   window.fl.forEach = function (arrayLike, callback) {
     var i;
     //Error Handling.
@@ -27,10 +28,9 @@
       throw new TypeError("An object which has the . length property must be passed as the first argument");
     } else if (!arrayLike[0] && arrayLike.length !== 0) {
       throw new TypeError("An object which has the ability to query indexes using [0] must be passed as the first argument");
-    } else if (arrayLike.length === 0) {
-      throw new TypeError("The first argument mustn't be empty");
     } else {
-      for (i = 0; i < arrayLike.length; i++) {
+      var length = arrayLike.length;
+      for (i = 0; i < length; i++) {
         if (callback(arrayLike[i], i, arrayLike) === false) {
           return false
         }
@@ -40,8 +40,9 @@
   },
   //*Like element.appendChild, except appends multiple.
   //*2 arguments: a nodeList(or array containing nodes), append location.
-  window.fl.appendChildren = function (nodeList, newContainer) { 
-    fl.forEach(nodeList, function (n) {
+  window.fl.appendChildren = function (nodeList, newContainer) {
+    var list = xtag.toArray(nodeList);
+    list.forEach(function (n) {
         newContainer.appendChild(n);
     });
   },
