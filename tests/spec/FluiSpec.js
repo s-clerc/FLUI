@@ -4,7 +4,28 @@
     describe("fl.", function () {
       it("should be an object", function () {
         expect(typeof fl).toBe("object");
-      }); 
+      });
+      describe("xtagObject.", function () {
+        var xobject;
+        beforeEach(function() {
+          xobject = new fl.xtagObject();
+        });
+        it("should have a lifecycle property", function () {
+          expect(typeof xobject.lifecycle).toBe("object");
+        });
+        it("should have a events property", function () {
+          expect(typeof xobject.events).toBe("object");
+        });
+        it("should have a accessors property", function () {
+          expect(typeof xobject.accessors).toBe("object");
+        });
+        it("should have a methods property", function () {
+          expect(typeof xobject.methods).toBe("object");
+        });
+        it("should have a mixins property", function () {
+          expect(typeof xobject.mixins).toBe("object");
+        });
+      });
       describe("addOnTap", function () {
         var span;
         beforeEach(function () {
@@ -18,11 +39,11 @@
         var doTests = function () {
           it("should fire when target is touched", function () {
             xtag.fireEvent(span, "touchend", {});
-            expect(window.i).toBe(true); 
+            expect(window.i).toBeTruthy(); 
           })
           it("should fire when target is clicked(mouseup);", function () {
             xtag.fireEvent(span, "mouseup", {});
-            expect(window.i).toBe(true); 
+            expect(window.i).toBeTruthy(); 
           });
         };
         describe("Inline events", function () {
@@ -56,7 +77,7 @@
           });
           var test = function (type) {
             xtag.fireEvent(span, type, {});
-            expect(!window.i).toBe(true);
+            expect(window.i).toBeFalsy();
           }
           it("shouldn't fire when touched", function () {
             test("touchend");
@@ -66,7 +87,7 @@
           });
         });
         it("Make sure the test teardown was done properly, other tests may be inaccurate if this fails", function () {
-          expect(window.i).toBe(undefined);
+          expect(window.i).not.toBeDefined();
         });
       });
     });
