@@ -123,7 +123,7 @@
         });
         it("should execute the callback * array.length", function () {
           var i = 0;
-          fl.forEach([1,2,3,4,5,6,7], function () {
+          fl.forEach([1,2,3,4,5,6,7], function (s) {
             i += 1;  
           });
           expect(i).toBe(7)
@@ -144,7 +144,27 @@
         it("should return false when looping is interupted by return false", function () {
           expect(fl.forEach([1, 2], function () {return false;})).toBeFalsy();
         });
-      })
+      });
+      describe("appendChildren", function () {
+        var a = document.createElement("div"),
+            b = document.createElement("div"),
+            list = [
+                document.createElement("span"),
+                document.createElement("span"),
+                document.createElement("span")
+            ];
+        beforeEach(function () {
+          fl.appendChildren(list, a);
+        });
+        it("should append all nodes from an array to another element", function () {
+          expect(a.childNodes.length).toEqual(3);
+        });
+        it("should append all nodes from an nodelist to another element", function () {
+          console.dir(a);
+          fl.appendChildren(a.children, b);
+          expect(b.childNodes.length).toEqual(3);
+        });
+      });
     });
   });
 }());
