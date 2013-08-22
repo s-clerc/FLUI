@@ -160,11 +160,11 @@
           expect(a.childNodes.length).toEqual(3);
         });
         it("should append all nodes from an nodelist to another element", function () {
-          console.dir(a);
           fl.appendChildren(a.children, b);
           expect(b.childNodes.length).toEqual(3);
         });
       });
+      
     });
   });
 }());
