@@ -57,7 +57,7 @@
   window.fl.wormholeObject = function (target, newContainer, filter) {
     this.target = target;
     this.newContainer = newContainer;
-    this.emulating = false;
+    this.open = false;
     this.filter = filter;
     this.observeFunction = function (mutations) {
       //Loops over mutations
@@ -81,20 +81,20 @@
     this.observer = new MutationObserver(this.observeFunction)
     //*Starts emulation.
     this.start = function () {
-      if (this.emulating) {
-        throw new Error("Already emulating, can't emulate twice");
+      if (this.open) {
+        throw new Error("Already open, can't open twice");
       }
       this.observer.observe(target, {childList: true, attributes: true, attributeFilter: this.filter});
-      this.emulating = true;
+      this.open = true;
       return true;
     };
     //*Stops emulation
     this.stop = function () {
-      if (!this.emulating) {
-        throw new Error("We aren't emulating, we can't stop anything!");
+      if (!this.open) {
+        throw new Error("We aren't open, we can't stop anything!");
       } else {
         this.observer.disconnect();
-        this.emulating = false;
+        this.open = false;
         return true;
       }
     };
