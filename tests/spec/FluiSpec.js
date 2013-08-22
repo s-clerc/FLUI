@@ -47,6 +47,24 @@
           });
           doTests();
         });
+        describe("fl.removeOnTap", function () {
+          beforeEach(function () {
+            fl.removeOnTap(span);
+            span.addEventListener(function () {
+              window.i = true;
+            });
+          });
+          var test = function (type) {
+            xtag.fireEvent(span, type, {});
+            expect(!window.i).toBe(true);
+          }
+          it("shouldn't fire when touched", function () {
+            test("touchend");
+          });
+          it("shouldn't fire when clicked", function () {
+            test("mouseup");
+          });
+        });
         it("Make sure the test teardown was done properly, other tests may be inaccurate if this fails", function () {
           expect(window.i).toBe(undefined);
         });
