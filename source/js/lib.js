@@ -54,7 +54,7 @@
   *3 arguments: 1. Target to extend, Node of new container, array to whitelist attributes.
   *Functionallity is implemented using Mutation Observers.
   */
-  window.fl.linkEmulationObject = function (target, newContainer, filter) {
+  window.fl.wormholeObject = function (target, newContainer, filter) {
     this.target = target;
     this.newContainer = newContainer;
     this.emulating = false;
