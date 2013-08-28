@@ -84,7 +84,11 @@
       if (this.opened) {
         throw new Error("Already open, can't open twice");
       }
-      this.observer.observe(target, {childList: true, attributes: true, attributeFilter: this.filter});
+      var options = {childList: true, attributes: true};
+      if (this.filter) {
+        options.attributeFilter = this.filter;
+      }
+      this.observer.observe(target, options);
       this.opened = true;
       return true;
     };
