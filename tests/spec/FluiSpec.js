@@ -164,7 +164,58 @@
           expect(b.childNodes.length).toEqual(3);
         });
       });
-      
+      describe("wormholeObject.", function () {
+        var a,
+            b,
+            wormhole;
+        beforeEach(function () {
+          a = document.createElement("div"),
+            b = document.createElement("span"),
+            wormhole = new fl.wormholeObject(b, a);
+          b.setAttribute("a", true);
+          b.setAttribute("d", "next");
+        });
+        describe("open", function () {
+          beforeEach(function () {
+            wormhole.open();
+          });
+          it("should open the wormhole, and transport elements to a", function () {
+            b.appendChild(document.createElement("a"));
+            document.body.appendChild(a);
+            expect(a.childNodes.length).toEqual(1)
+          });
+          describe("wormhole.close", function () {
+            it("should close the wormhole and not transport elements to a", function () {
+              wormhole.close();
+              b.appendChild(document.createElement("a"));
+              expect(b.childNodes.length).toEqual(1);
+              expect(a.childNodes.length).toEqual(0);
+            });
+          });
+        });
+        describe("copyAttributes", function () {
+          it("should copy all attributes", function() {
+            wormhole.copyAttributes();
+            expect(a.getAttribute("a")).toBeTruthy();
+            expect(a.getAttribute("d")).toBe("next");
+          });
+          it("shouldn't copy attributes in the blacklist", function () {
+            a.setAttribute("d", false); 
+            wormhole.copyAttributes(false, ["d"]);
+            expect(a.getAttribute("d")).toBe("false");
+          });
+          it("shouldn't copy attributes which match regex in the blacklist", function () {
+            b.setAttribute("onclick", "hello");
+            wormhole.copyAttributes(false, [/on*/]);
+            expect(a.onclick).toBeFalsy();
+          });
+          it("should erase the values of the attributes when the first argument is set to false", function () { 
+            b.setAttribute("a", "hello");
+            wormhole.copyAttributes(true);
+            expect(b.getAttribute("a")).toBe("");
+          });
+        });
+      });
     });
   });
 }());
