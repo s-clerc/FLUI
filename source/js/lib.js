@@ -136,7 +136,6 @@
   xtag.mixins.disabled.accessors.disabled = {
     attribute: {boolean: true},
     set: function (value) {
-      console.log(value);
       if (value) {
         //Sets the cursor to the default value to make sure it doesn't look 
         //tappable
