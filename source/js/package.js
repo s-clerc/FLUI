@@ -5,5 +5,5 @@
     "lib.js",
     "resizeEvent.js",
     "button.js"
-    ], "package.js", false);
+    ], "package.js", "defer");
 }())

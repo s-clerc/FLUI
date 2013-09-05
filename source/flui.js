@@ -1,7 +1,7 @@
-(function() {
+(function () {
   "use strict";
   window.fl = ({} || window.fl);
-  window.fl.findFileSource = function() {
+  window.fl.findFileSource = function () {
     var scripts = document.getElementsByTagName('script'),
       script = scripts[scripts.length - 1];
     console.log(script);
@@ -11,13 +11,13 @@
     }
     return script.getAttribute('src', 2)
   };
-  window.fl.depends = function(r, filename, async, filesource) {
+  window.fl.depends = function (r, filename, asyncDefer, filesource) {
     var e,
-        source = (filesource  || document.querySelector("script[src*='" + filename + "']").getAttribute("src")).replace(filename, "");
-      r.forEach(function(src) {
+        source = (filesource  || document.querySelector("script[src*='" + filename + "']").getAttribute("src")).replace(filename, "")
+      r.forEach(function (src) {
         e = document.createElement("script");
-        if (async !== "undefined") {
-          e.setAttribute("async", (async || false));
+        if (asyncDefer !== "undefined") {
+          e.setAttribute(asyncDefer, (asyncDefer || false));
         }
         e.setAttribute("src", source + src);
         document.head.appendChild(e);
