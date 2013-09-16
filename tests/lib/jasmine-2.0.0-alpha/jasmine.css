@@ -42,7 +42,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 .html-reporter .summary ul { list-style-type: none; margin-left: 14px; padding-top: 0; padding-left: 0; }
 .html-reporter .summary ul.suite { margin-top: 7px; margin-bottom: 7px; }
 .html-reporter .summary li.passed a { color: #5e7d00; }
-.html-reporter .summary li.failed a { color: #b03911; }
+.html-reporter .summary li.failed a { color: red; }
 .html-reporter .summary li.pending a { color: #ba9d37; }
 .html-reporter .description + .suite { margin-top: 0; }
 .html-reporter .suite { margin-top: 14px; }

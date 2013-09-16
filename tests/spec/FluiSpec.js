@@ -176,23 +176,30 @@
           b.setAttribute("d", "next");
         });
         describe("open", function () {
-          beforeEach(function () {
-            wormhole.open();
-          });
           it("should open the wormhole, and transport elements to a", function () {
-            b.appendChild(document.createElement("a"));
-            document.body.appendChild(a);
-            expect(a.childNodes.length).toEqual(1)
-          });
-          describe("wormhole.close", function () {
-            it("should close the wormhole and not transport elements to a", function () {
-              wormhole.close();
+            runs(function () {
+              wormhole.open();
               b.appendChild(document.createElement("a"));
-              expect(b.childNodes.length).toEqual(1);
-              expect(a.childNodes.length).toEqual(0);
+              document.body.appendChild(a);
+            });
+            waitsFor(function () {
+              return a.childNodes.length > 0 ? true : false;
+            }, 10000);
+            runs(function () {
+              expect(a.childNodes.length).toEqual(1);
             });
           });
         });
+        describe("close", function () {
+          it("should close the wormhole and not transport elements to a", function () {
+            wormhole.open();
+            wormhole.close();
+            b.appendChild(document.createElement("a"));
+            expect(b.childNodes.length).toEqual(1);
+            expect(a.childNodes.length).toEqual(0);
+          });
+        });
+       
         describe("copyAttributes", function () {
           it("should copy all attributes", function() {
             wormhole.copyAttributes();
@@ -215,6 +222,45 @@
             expect(b.getAttribute("a")).toBe("");
           });
         });
+      });
+      describe("xtag.mixins.disabled(added by flui)", function () {
+        var xobject = new fl.xtagObject(),
+            addListener = function (element, type) {
+              element.addEventListener(type, function () {
+                window.i = true;
+              });
+            },
+            test = function (type, dispatchName, checkType) {
+              addListener(e, type)
+              xtag.fireEvent(e, dispatchName);
+              expect(window.i).toBeTruthy();
+              e.disabled = true;
+              if (checkType === false) { 
+                e.disabled = false;
+              } 
+              window.i = undefined;
+              xtag.fireEvent(e, dispatchName);
+              expect(window.i).not.toBeTruthy();
+            },
+            testTruthy = function (type, dispatchName, checkType) {
+       
+            },
+            testFalsy = function (type, dispatchName, checkType) {
+
+            };
+        xobject.mixins.push("disabled");
+        xobject.lifecycle.created = function () { fl.addOnTap(this);};
+        xtag.register("x-foo", xobject);
+        beforeEach(function () {
+          var e = document.createElement("x-foo");
+        });
+        it("should disable ontap", function () {
+          test("tap", "touchup");
+        });
+        it("should disable onClick", function () {
+          test("click", "mouseup");
+        });
+        
       });
     });
   });
