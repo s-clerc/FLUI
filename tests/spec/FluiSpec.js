@@ -224,41 +224,34 @@
         });
       });
       describe("xtag.mixins.disabled(added by flui)", function () {
-        var xobject = new fl.xtagObject(),
-            addListener = function (element, type) {
+            window.i = undefined;
+            var addListener = function (element, type) {
               element.addEventListener(type, function () {
                 window.i = true;
               });
             },
             test = function (type, dispatchName, checkType) {
-              addListener(e, type)
-              xtag.fireEvent(e, dispatchName);
-              expect(window.i).toBeTruthy();
+              //Creates new x-foo
+              var e = document.createElement("x-foo");
+              addListener(e, type);
               e.disabled = true;
-              if (checkType === false) { 
-                e.disabled = false;
-              } 
+              //Reset variable
               window.i = undefined;
               xtag.fireEvent(e, dispatchName);
-              expect(window.i).not.toBeTruthy();
-            },
-            testTruthy = function (type, dispatchName, checkType) {
-       
-            },
-            testFalsy = function (type, dispatchName, checkType) {
-
+              expect(window.i).toBe(checkType);
             };
-        xobject.mixins.push("disabled");
-        xobject.lifecycle.created = function () { fl.addOnTap(this);};
-        xtag.register("x-foo", xobject);
         beforeEach(function () {
-          var e = document.createElement("x-foo");
+          //This is done in before each because doing it in describe wouldn't work because the file wouldn't be loaded.
+          var xobject = new fl.xtagObject();
+          xobject.mixins.push("disabled");
+          xobject.lifecycle.created = function () {fl.addOnTap(this);};
+          xtag.register("x-foo", xobject);  
         });
         it("should disable ontap", function () {
-          test("tap", "touchup");
+          test("tap", "touchup", undefined);
         });
         it("should disable onClick", function () {
-          test("click", "mouseup");
+          test("click", "mouseup", undefined);
         });
         
       });
