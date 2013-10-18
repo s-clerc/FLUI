@@ -139,6 +139,8 @@
       if (value) {
         //Sets the cursor to the default value to make sure it doesn't look 
         //tappable
+        //Adds default disabled class
+        this.classList.add("disabled");
         this.xtag.cursorOldValue = this.style.cursor;
         this.style.cursor = "default";
         fl.removeOnTap(this);
@@ -152,6 +154,8 @@
           //Reverts it to the old values.
           this.style.cursor = this.xtag.cursorOldValue;
           this.onclick = this.xtag.onclickOldValue;
+          //Removes default disabled class
+          this.classList.remove("disabled");
       }
     }
   };

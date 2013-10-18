@@ -4,15 +4,13 @@
 
 // Base styles
 // --------------------------------------------------
-.btn,
-.btn-group > .btn,
 .btn-group > .dropdown-menu,
 .btn-group > .popover {
   font-size: @base-font-size * 1.071; /* 15px */
   font-weight: 500;
 }
 
-.btn {
+fl-button {
   border: none;
   background: @lightgray;
   color: @button-text;
@@ -46,7 +44,7 @@
 
   // Disabled state
   &.disabled,
-  &[disabled] {
+  &[disabled="disabled"] {
     background-color: @lightgray;
     color: fade(@button-text, 75%);
     .box-shadow(none);

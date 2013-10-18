@@ -8,6 +8,7 @@
     this.methods = {};
     this.mixins = [];
   }
+  //Ontap logic.
   var fireOnTap = function (e) {
     xtag.fireEvent(this, "tap", {eventData: e});
     r = true;
@@ -35,5 +36,4 @@
     n.removeEventListener("touchend", fireOnTap, false);
     n.removeEventListener("mouseup", fireOnTap, false);          
   }
-
 }());
