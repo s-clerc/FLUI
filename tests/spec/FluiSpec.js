@@ -73,6 +73,7 @@
             fl.removeOnTap(span);
             span.addEventListener("tap", function () {
               window.i = true;
+              console.warn("⚠ THIS MEANS THE FL.REMOVEONTAP TESTS FAILED");
             });
           });
           var test = function (type) {
@@ -228,6 +229,7 @@
             var addListener = function (element, type) {
               element.addEventListener(type, function () {
                 window.i = true;
+                console.warn("THIS MEANS MIXINS.DISABLED FAILED MISERABLY");
               });
             },
             test = function (type, dispatchName, checkType) {
@@ -248,13 +250,46 @@
           xtag.register("x-foo", xobject);  
         });
         it("should disable ontap", function () {
-          test("tap", "touchup", undefined);
+          test("tap", "touchend", undefined);
         });
         it("should disable onClick", function () {
           test("click", "mouseup", undefined);
         });
-        
+        it("should add and remove disabled class", function () {
+            //Creates new x-foo
+            var e = document.createElement("x-foo");
+            //Checks is it adds the disabled class
+            e.disabled = true;
+            console.log(e.className);
+            expect(e.classList.contains("disabled")).toBeTruthy();
+            //Checks if it removes the disabled class.
+            e.disabled = false;
+            expect(e.classList.contains("disabled")).toBeFalsy();
+        });
       });
     });
+  });
+  describe("Input Components", function () {
+    describe("fl-button", function () {
+      var button;
+      beforeEach(function () {
+        button = document.createElement("fl-button");
+      });
+      it("should have ontap funtionnality", function () {
+        button.addEventListener("tap", function () {
+          window.i = true;
+        });
+        xtag.fireEvent(button, "touchend");
+        expect(window.i).toBeTruthy;
+        window.i = undefined;
+      });
+      it("should have disabled functionnality", function () {
+        button.disabled = true;
+        expect(button.classList.contains("disabled")).toBeTruthy();
+      });
+      it("should have 'display: inline-block'", function () {
+        expect(button.style.display).toBe("inline-block");
+      });
+    });  
   });
 }());
