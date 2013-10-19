@@ -287,9 +287,6 @@
         button.disabled = true;
         expect(button.classList.contains("disabled")).toBeTruthy();
       });
-      it("should have 'display: inline-block'", function () {
-        expect(button.style.display).toBe("inline-block");
-      });
     });  
   });
 }());
