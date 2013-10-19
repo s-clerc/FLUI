@@ -260,7 +260,6 @@
             var e = document.createElement("x-foo");
             //Checks is it adds the disabled class
             e.disabled = true;
-            console.log(e.className);
             expect(e.classList.contains("disabled")).toBeTruthy();
             //Checks if it removes the disabled class.
             e.disabled = false;
@@ -287,6 +286,24 @@
         button.disabled = true;
         expect(button.classList.contains("disabled")).toBeTruthy();
       });
-    });  
+    });
+    describe("fl-tappable", function () {
+      var tappable;
+      beforeEach(function () {
+        tappable = document.createElement("fl-tappable");
+      });
+      it("should have ontap funtionnality", function () {
+        tappable.addEventListener("tap", function () {
+          window.i = true;
+        });
+        xtag.fireEvent(tappable, "touchend");
+        expect(window.i).toBeTruthy;
+        window.i = undefined;
+      });
+      it("should have disabled functionnality", function () {
+        tappable.disabled = true;
+        expect(tappable.classList.contains("disabled")).toBeTruthy();
+      });
+    });
   });
 }());
