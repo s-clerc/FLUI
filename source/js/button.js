@@ -9,7 +9,6 @@
   xtag.register("fl-tappable", xobject);
   xobject.lifecycle.created = function () {
     fl.addOnTap(this);
-    this.style.display = "inline-block";
   }
   //*Like a normal button with ontap events.
   xtag.register("fl-button", xobject);
