@@ -267,6 +267,7 @@
         });
       });
     });
+    
   });
   describe("Input Components", function () {
     describe("fl-button", function () {
@@ -285,24 +286,6 @@
       it("should have disabled functionnality", function () {
         button.disabled = true;
         expect(button.classList.contains("disabled")).toBeTruthy();
-      });
-    });
-    describe("fl-tappable", function () {
-      var tappable;
-      beforeEach(function () {
-        tappable = document.createElement("fl-tappable");
-      });
-      it("should have ontap funtionnality", function () {
-        tappable.addEventListener("tap", function () {
-          window.i = true;
-        });
-        xtag.fireEvent(tappable, "touchend");
-        expect(window.i).toBeTruthy;
-        window.i = undefined;
-      });
-      it("should have disabled functionnality", function () {
-        tappable.disabled = true;
-        expect(tappable.classList.contains("disabled")).toBeTruthy();
       });
     });
   });
