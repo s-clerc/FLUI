@@ -5,11 +5,6 @@
   xobject.lifecycle.created = function () {
     fl.addOnTap(this);
   }
-  //* Just like below, except with no default look
-  xtag.register("fl-tappable", xobject);
-  xobject.lifecycle.created = function () {
-    fl.addOnTap(this);
-  }
-  //*Like a normal button with ontap events.
+  //*Like a normal button with ontap events and defaults styling.
   xtag.register("fl-button", xobject);
 }());
