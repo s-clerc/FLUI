@@ -134,8 +134,8 @@
     //*@example
     //* Changes <code><fl-input /></code> to <code><input is="fl-input" /></code>
     //* Preserves all attributes.
-    fl.CorrectImproperExtendedComponents = function (properTagName, isValue, that) {
-      if (this.tagName !== properTagName.toUpperCase();) {
+    window.fl.CorrectImproperExtendedComponents = function (properTagName, isValue, that) {
+      if (this.tagName !== properTagName.toUpperCase()) {
         var successor = document.createElement(properTagName);
         successor.attributes = this.attributes;
         fl.forEach(this.attributes, function (d, i) {
