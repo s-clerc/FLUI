@@ -224,7 +224,9 @@
           });
         });
       });
-      describe("xtag.mixins.disabled(added by flui)", function () {
+    });
+    describe("xtag.mixins.", function () {
+      describe("disabled", function () {
             window.i = undefined;
             var addListener = function (element, type) {
               element.addEventListener(type, function () {
@@ -267,7 +269,6 @@
         });
       });
     });
-    
   });
   describe("Input Components", function () {
     describe("fl-button", function () {
