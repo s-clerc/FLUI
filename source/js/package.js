@@ -3,6 +3,7 @@
   fl.depends([
     "lib2.js",
     "lib.js",
-    "button.js"
+    "button.js",
+    "input.js"
     ], "package.js", "defer");
 }())
