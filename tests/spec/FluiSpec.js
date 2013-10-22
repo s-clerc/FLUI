@@ -224,6 +224,41 @@
           });
         });
       });
+      describe("correctExtend", function () {
+        var e;
+        beforeEach(function () {
+          var xobject = new fl.xtagObject();
+          xobject.extends = "div";
+          xobject.lifecycle.created = function () {
+            window.i++;
+            fl.correctExtend("div", "t-foo", this);
+          };
+          xtag.register("t-foo", xobject);
+          window.i=0;
+          e = document.createElement("span");
+          document.body.appendChild(e);
+        });
+        afterEach(function () {
+          window.i=undefined;
+
+        });
+        it("should make sure x-foo is declared correctly", function () {
+          runs(function () {
+            e.innerHTML = "<t-foo id='h' />";
+          });
+          waitsFor(function () {
+            return e.innerHTML.substring(1, 4) === "div" ? true : false;
+          }, 10000);
+          runs(function () {
+            expect(e.innerHTML.substring(1, 4)).toBe("div");
+            expect(h.getAttribute("is")).toBe("t-foo");
+          });
+        });
+        it("shouldn't run unnecessarily", function () {
+          document.createElement("t-foo");
+          expect(window.i).toEqual(1);
+        })
+      });
     });
     describe("xtag.mixins.", function () {
       describe("disabled", function () {
